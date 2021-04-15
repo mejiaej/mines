@@ -19,7 +19,13 @@ const App = () => {
     [ { value: null, revealed: false }, { value: null, revealed: false }, { value: null, revealed: false }, { value: null, revealed: false } ]
   ]);
 
-  return (
+  const handleCellClick = (row: number, column: number) => {
+    const newGameBoard = [...gameBoard];
+    newGameBoard[row][column].revealed = true;
+    setGameBoard(newGameBoard);
+  }
+
+   return (
     <div className="App">
       <table>
         {gameBoard.map((row, row_index) => {
@@ -31,6 +37,7 @@ const App = () => {
                   value={cell.value}
                   row={row_index}
                   column={y_index}
+                  handleCellClick={handleCellClick}
                 />
                 )
               )}

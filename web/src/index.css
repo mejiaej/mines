@@ -17,6 +17,11 @@ td {
  height: 2rem;
  width: 2rem;
 }
+
 td:hover {
   background-color: #1c8f39;
+}
+
+.cell-hidden {
+  background-color: #525753;
 }
