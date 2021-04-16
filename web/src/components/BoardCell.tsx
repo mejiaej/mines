@@ -1,7 +1,7 @@
 interface BoardCellProps {
   row: number,
   column: number,
-  value: number | null,
+  value: number,
   revealed: boolean,
   handleCellClick: Function,
 }
@@ -19,9 +19,18 @@ const BoardCell = ({ revealed, value, row, column, handleCellClick }: BoardCellP
     }
   }
 
+  let content = '';
+  if(revealed) {
+    if (value < 0) {
+      content = '*'
+    } else if(value > 0) {
+      content = value.toString();
+    }
+  }
+
   return (
     <td className={className} onClick={handleClick}>
-      {`${revealed && value != null ? value : ''}`}
+      {content}
     </td>
   )
 }
