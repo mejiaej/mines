@@ -20,14 +20,433 @@ const board3 = [
 ];
 
 const board4 = [
-  [ { value: -1, revealed: false }, { value: 2, revealed: false }, { value: 0, revealed: false }, { value: 0, revealed: false } ],
-  [ { value: -1 , revealed: false}, { value: 2, revealed: false }, { value: 0, revealed: false }, { value: 0, revealed: false } ],
-  [ { value: 1, revealed: false }, { value: 1, revealed: false }, { value: 0, revealed: false }, { value: 0, revealed: false } ],
-  [ { value: 0, revealed: false }, { value: 0, revealed: false }, { value: 0, revealed: false }, { value: 0, revealed: false } ]
+  [
+      {
+          "value": 1,
+          "revealed": false
+      },
+      {
+          "value": 1,
+          "revealed": false
+      },
+      {
+          "value": 1,
+          "revealed": false
+      },
+      {
+          "value": -1,
+          "revealed": false
+      },
+      {
+          "value": 1,
+          "revealed": false
+      },
+      {
+          "value": 0,
+          "revealed": false
+      },
+      {
+          "value": 0,
+          "revealed": false
+      },
+      {
+          "value": 0,
+          "revealed": false
+      },
+      {
+          "value": 1,
+          "revealed": false
+      },
+      {
+          "value": -1,
+          "revealed": false
+      }
+  ],
+  [
+      {
+          "value": -1,
+          "revealed": false
+      },
+      {
+          "value": 2,
+          "revealed": false
+      },
+      {
+          "value": 2,
+          "revealed": false
+      },
+      {
+          "value": 1,
+          "revealed": false
+      },
+      {
+          "value": 1,
+          "revealed": false
+      },
+      {
+          "value": 1,
+          "revealed": false
+      },
+      {
+          "value": 1,
+          "revealed": false
+      },
+      {
+          "value": 1,
+          "revealed": false
+      },
+      {
+          "value": 1,
+          "revealed": false
+      },
+      {
+          "value": 1,
+          "revealed": false
+      }
+  ],
+  [
+      {
+          "value": 2,
+          "revealed": false
+      },
+      {
+          "value": -1,
+          "revealed": false
+      },
+      {
+          "value": 1,
+          "revealed": false
+      },
+      {
+          "value": 0,
+          "revealed": false
+      },
+      {
+          "value": 0,
+          "revealed": false
+      },
+      {
+          "value": 1,
+          "revealed": false
+      },
+      {
+          "value": -1,
+          "revealed": false
+      },
+      {
+          "value": 2,
+          "revealed": false
+      },
+      {
+          "value": 1,
+          "revealed": false
+      },
+      {
+          "value": 0,
+          "revealed": false
+      }
+  ],
+  [
+      {
+          "value": 2,
+          "revealed": false
+      },
+      {
+          "value": 2,
+          "revealed": false
+      },
+      {
+          "value": 1,
+          "revealed": false
+      },
+      {
+          "value": 0,
+          "revealed": false
+      },
+      {
+          "value": 0,
+          "revealed": false
+      },
+      {
+          "value": 1,
+          "revealed": false
+      },
+      {
+          "value": 2,
+          "revealed": false
+      },
+      {
+          "value": -1,
+          "revealed": false
+      },
+      {
+          "value": 1,
+          "revealed": false
+      },
+      {
+          "value": 0,
+          "revealed": false
+      }
+  ],
+  [
+      {
+          "value": -1,
+          "revealed": false
+      },
+      {
+          "value": 1,
+          "revealed": false
+      },
+      {
+          "value": 0,
+          "revealed": false
+      },
+      {
+          "value": 0,
+          "revealed": false
+      },
+      {
+          "value": 0,
+          "revealed": false
+      },
+      {
+          "value": 0,
+          "revealed": false
+      },
+      {
+          "value": 1,
+          "revealed": false
+      },
+      {
+          "value": 1,
+          "revealed": false
+      },
+      {
+          "value": 1,
+          "revealed": false
+      },
+      {
+          "value": 0,
+          "revealed": false
+      }
+  ],
+  [
+      {
+          "value": 1,
+          "revealed": false
+      },
+      {
+          "value": 1,
+          "revealed": false
+      },
+      {
+          "value": 0,
+          "revealed": false
+      },
+      {
+          "value": 1,
+          "revealed": false
+      },
+      {
+          "value": 1,
+          "revealed": false
+      },
+      {
+          "value": 1,
+          "revealed": false
+      },
+      {
+          "value": 0,
+          "revealed": false
+      },
+      {
+          "value": 0,
+          "revealed": false
+      },
+      {
+          "value": 0,
+          "revealed": false
+      },
+      {
+          "value": 0,
+          "revealed": false
+      }
+  ],
+  [
+      {
+          "value": 0,
+          "revealed": false
+      },
+      {
+          "value": 0,
+          "revealed": false
+      },
+      {
+          "value": 0,
+          "revealed": false
+      },
+      {
+          "value": 1,
+          "revealed": false
+      },
+      {
+          "value": -1,
+          "revealed": false
+      },
+      {
+          "value": 1,
+          "revealed": false
+      },
+      {
+          "value": 0,
+          "revealed": false
+      },
+      {
+          "value": 1,
+          "revealed": false
+      },
+      {
+          "value": 1,
+          "revealed": false
+      },
+      {
+          "value": 1,
+          "revealed": false
+      }
+  ],
+  [
+      {
+          "value": 0,
+          "revealed": false
+      },
+      {
+          "value": 0,
+          "revealed": false
+      },
+      {
+          "value": 0,
+          "revealed": false
+      },
+      {
+          "value": 1,
+          "revealed": false
+      },
+      {
+          "value": 1,
+          "revealed": false
+      },
+      {
+          "value": 1,
+          "revealed": false
+      },
+      {
+          "value": 0,
+          "revealed": false
+      },
+      {
+          "value": 2,
+          "revealed": false
+      },
+      {
+          "value": -1,
+          "revealed": false
+      },
+      {
+          "value": 3,
+          "revealed": false
+      }
+  ],
+  [
+      {
+          "value": 0,
+          "revealed": false
+      },
+      {
+          "value": 0,
+          "revealed": false
+      },
+      {
+          "value": 0,
+          "revealed": false
+      },
+      {
+          "value": 0,
+          "revealed": false
+      },
+      {
+          "value": 0,
+          "revealed": false
+      },
+      {
+          "value": 0,
+          "revealed": false
+      },
+      {
+          "value": 1,
+          "revealed": false
+      },
+      {
+          "value": 3,
+          "revealed": false
+      },
+      {
+          "value": -1,
+          "revealed": false
+      },
+      {
+          "value": -1,
+          "revealed": false
+      }
+  ],
+  [
+      {
+          "value": 0,
+          "revealed": false
+      },
+      {
+          "value": 0,
+          "revealed": false
+      },
+      {
+          "value": 0,
+          "revealed": false
+      },
+      {
+          "value": 0,
+          "revealed": false
+      },
+      {
+          "value": 0,
+          "revealed": false
+      },
+      {
+          "value": 0,
+          "revealed": false
+      },
+      {
+          "value": 1,
+          "revealed": false
+      },
+      {
+          "value": -1,
+          "revealed": false
+      },
+      {
+          "value": 3,
+          "revealed": false
+      },
+      {
+          "value": 2,
+          "revealed": false
+      }
+  ]
 ];
+
+
 
 export {
   board1,
   board2,
   board3,
+  board4,
 }

@@ -20,13 +20,13 @@ const BoardCell = ({ revealed, value, row, column, handleCellClick }: BoardCellP
   }
 
   let content = '';
-  if(revealed) {
+  //if(revealed) {
     if (value < 0) {
       content = '*'
     } else if(value > 0) {
       content = value.toString();
     }
-  }
+  //}
 
   return (
     <td className={className} onClick={handleClick}>

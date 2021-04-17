@@ -44,48 +44,15 @@ public class GameService {
           currentCell.setValue(-1);
 
           // add +1 to cells around mines
-          setNumberOfMinesaround(randomRow-1, randomColumn-1, gameBoard);
-          setNumberOfMinesaround(randomRow-1, randomColumn, gameBoard);
-          setNumberOfMinesaround(randomRow-1, randomColumn+1, gameBoard);
-          setNumberOfMinesaround(randomRow, randomColumn-1, gameBoard);
-          setNumberOfMinesaround(randomRow, randomColumn+1, gameBoard);
-          setNumberOfMinesaround(randomRow+1, randomColumn-1, gameBoard);
-          setNumberOfMinesaround(randomRow+1, randomColumn, gameBoard);
-          setNumberOfMinesaround(randomRow+1, randomColumn+1, gameBoard);
+          setNumberOfMinesAround(randomRow-1, randomColumn-1, gameBoard); // topLeft
+          setNumberOfMinesAround(randomRow-1, randomColumn, gameBoard); //top
+          setNumberOfMinesAround(randomRow-1, randomColumn+1, gameBoard); // topRight
+          setNumberOfMinesAround(randomRow, randomColumn-1, gameBoard); // left
+          setNumberOfMinesAround(randomRow, randomColumn+1, gameBoard); // right
+          setNumberOfMinesAround(randomRow+1, randomColumn-1, gameBoard); // bottomLeft
+          setNumberOfMinesAround(randomRow+1, randomColumn, gameBoard); // bottom
+          setNumberOfMinesAround(randomRow+1, randomColumn+1, gameBoard); // bottomRight
 
-          /*GameCell topLeft       = existsCell(randomRow-1, randomColumn-1, gameBoard) ? gameBoard.get(randomRow-1).get(randomColumn-1)  : null;
-          GameCell top           = existsCell(randomRow-1, randomColumn, gameBoard)           ? gameBoard.get(randomRow-1).get(randomColumn)    : null;
-          GameCell topRight      = existsCell(randomRow-1, randomColumn+1, gameBoard) ? gameBoard.get(randomRow-1).get(randomColumn+1)  : null;
-          GameCell left          = existsCell(randomRow, randomColumn-1, gameBoard)   ? gameBoard.get(randomRow).get(randomColumn-1)    : null;
-          GameCell right         = existsCell(randomRow, randomColumn+1, gameBoard)   ? gameBoard.get(randomRow).get(randomColumn+1)    : null;
-          GameCell bottomLeft    = existsCell(randomRow+1, randomColumn-1, gameBoard) ? gameBoard.get(randomRow+1).get(randomColumn-1)  : null;
-          GameCell bottom        = existsCell(randomRow+1, randomColumn, gameBoard)           ? gameBoard.get(randomRow+1).get(randomColumn)    : null;
-          GameCell bottomRight   = existsCell(randomRow+1, randomColumn+1, gameBoard) ? gameBoard.get(randomRow+1).get(randomColumn+1)  : null;
-
-          if (topLeft != null && topLeft.getValue() >= 0) {
-            topLeft.setValue(topLeft.getValue() + 1);
-          }
-          if (top != null && top.getValue() >= 0) {
-            top.setValue(top.getValue() + 1);
-          }
-          if (topRight != null && topRight.getValue() >= 0) {
-            topRight.setValue(topRight.getValue() + 1);
-          }
-          if (left != null && left.getValue() >= 0) {
-            left.setValue(left.getValue() + 1);
-          }
-          if (right != null && right.getValue() >= 0) {
-            right.setValue(right.getValue() + 1);
-          }
-          if (bottomLeft != null && bottomLeft.getValue() >= 0) {
-            bottomLeft.setValue(bottomLeft.getValue() + 1);
-          }
-          if (bottom != null && bottom.getValue() >= 0) {
-            bottom.setValue(bottom.getValue() + 1);
-          }
-          if (bottomRight != null && bottomRight.getValue() >= 0) {
-            bottomRight.setValue(bottomRight.getValue() + 1);
-          } */
           currentMines++;
         }
       }
@@ -105,7 +72,7 @@ public class GameService {
     }
   }
 
-  private void setNumberOfMinesaround(int row, int column, List<List<GameCell>> gameBoard) {
+  private void setNumberOfMinesAround(int row, int column, List<List<GameCell>> gameBoard) {
     try {
       GameCell cell = gameBoard.get(row).get(column);
       if (cell.getValue() >= 0) {
