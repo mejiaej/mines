@@ -1,0 +1,35 @@
+version: '3.5'
+services:
+  flyway:
+    image: flyway/flyway
+    container_name: flyway_mines
+    command: -url=jdbc:postgresql://postgres/game -schemas=mines -user=user -password=changeme -baselineOnMigrate=true -connectRetries=60 migrate
+    volumes:
+      - ./src/main/resources/flyway/migrations:/flyway/sql
+    depends_on:
+      - postgres
+    networks:
+      - mines-network
+
+  postgres:
+    image: postgres:13
+    container_name: postgres_mines
+    environment:
+      POSTGRES_DB: game
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: changeme
+      PGDATA: /data/postgres
+    volumes:
+      - mines-volume:/data/postgres
+    ports:
+      - 5432:5432
+    networks:
+      - mines-network
+    restart: unless-stopped
+
+networks:
+  mines-network:
+    driver: bridge
+
+volumes:
+  mines-volume:
