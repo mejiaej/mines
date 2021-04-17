@@ -15,6 +15,7 @@ public class GameService {
   public Game generateNewGameBoard(NewGameDto newGameDto) {
     List<List<GameCell>> gameBoard = new ArrayList();
 
+    // generate initial empty board
     IntStream.rangeClosed(0, newGameDto.getRows() - 1).forEach((rowIndex) -> {
       List<GameCell> row = new ArrayList();
       IntStream.rangeClosed(0, newGameDto.getColumns() - 1).forEach((columnIndex) -> {
@@ -28,14 +29,31 @@ public class GameService {
 
     int currentMines = 0;
     while (currentMines < newGameDto.getMines()) {
+      // find a random cell to set up a mine
       int randomRow = new Random().nextInt(newGameDto.getRows() + 1);
       int randomColumn = new Random().nextInt(newGameDto.getColumns() + 1);
+
       if(existsCell(randomRow, randomColumn, gameBoard)) {
         GameCell currentCell = gameBoard.get(randomRow).get(randomColumn);
+
+        // set up mine only if cell does not have a mine already
+        // value = 0, empty
+        // value = -1, mine
+        // value > 0, # of mines around
         if(currentCell.getValue() >= 0) {
           currentCell.setValue(-1);
 
-          GameCell topLeft       = existsCell(randomRow-1, randomColumn-1, gameBoard) ? gameBoard.get(randomRow-1).get(randomColumn-1)  : null;
+          // add +1 to cells around mines
+          setNumberOfMinesaround(randomRow-1, randomColumn-1, gameBoard);
+          setNumberOfMinesaround(randomRow-1, randomColumn, gameBoard);
+          setNumberOfMinesaround(randomRow-1, randomColumn+1, gameBoard);
+          setNumberOfMinesaround(randomRow, randomColumn-1, gameBoard);
+          setNumberOfMinesaround(randomRow, randomColumn+1, gameBoard);
+          setNumberOfMinesaround(randomRow+1, randomColumn-1, gameBoard);
+          setNumberOfMinesaround(randomRow+1, randomColumn, gameBoard);
+          setNumberOfMinesaround(randomRow+1, randomColumn+1, gameBoard);
+
+          /*GameCell topLeft       = existsCell(randomRow-1, randomColumn-1, gameBoard) ? gameBoard.get(randomRow-1).get(randomColumn-1)  : null;
           GameCell top           = existsCell(randomRow-1, randomColumn, gameBoard)           ? gameBoard.get(randomRow-1).get(randomColumn)    : null;
           GameCell topRight      = existsCell(randomRow-1, randomColumn+1, gameBoard) ? gameBoard.get(randomRow-1).get(randomColumn+1)  : null;
           GameCell left          = existsCell(randomRow, randomColumn-1, gameBoard)   ? gameBoard.get(randomRow).get(randomColumn-1)    : null;
@@ -67,7 +85,7 @@ public class GameService {
           }
           if (bottomRight != null && bottomRight.getValue() >= 0) {
             bottomRight.setValue(bottomRight.getValue() + 1);
-          }
+          } */
           currentMines++;
         }
       }
@@ -84,6 +102,16 @@ public class GameService {
       return  true;
     } catch (IndexOutOfBoundsException e) {
       return false;
+    }
+  }
+
+  private void setNumberOfMinesaround(int row, int column, List<List<GameCell>> gameBoard) {
+    try {
+      GameCell cell = gameBoard.get(row).get(column);
+      if (cell.getValue() >= 0) {
+        cell.setValue(cell.getValue() + 1);
+      }
+    } catch (IndexOutOfBoundsException e) {
     }
   }
 }
