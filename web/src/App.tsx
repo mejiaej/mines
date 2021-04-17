@@ -12,9 +12,14 @@ const App = () => {
   const [gameBoard, setGameBoard] = useState<Cell[][]>(generateInitialGameBoard(10,10, GameDifficulty.Medium));
 
   const handleCellClick = (row: number, column: number) => {
-    const newGameBoard = revealAdjacents(row, column, gameBoard);
-    setGameBoard(newGameBoard);
-    generateInitialGameBoard(4, 4, GameDifficulty.Easy);
+    try {
+      const newGameBoard = revealAdjacents(row, column, gameBoard);
+      setGameBoard(newGameBoard); 
+    } catch (error) {
+      revealMines();
+      alert(error.message);
+      //TODO: use react context to indicate that the game is over
+    }
   }
 
   const revealAdjacents = (row: number, column: number, gameBoard: Cell[][]) => {
@@ -28,7 +33,7 @@ const App = () => {
       if(currentCellValue < 0) {
         // cell contains a mine
         newGameBoard[row][column].revealed = true;
-        console.log('GAME OVER');
+        throw Error('Game Over');
         // TODO: reveal all the mines in the gameboard
       } else {
         // if cell value > 0 = mine adjacent, stop evaluating in that direction
@@ -76,6 +81,19 @@ const App = () => {
     }
     
     return newGameBoard;
+  }
+
+  const revealMines = () => {
+    const newGameBoard = [...gameBoard];
+    newGameBoard.forEach((row) => {
+      row.forEach((cell) => {
+        if(!cell.revealed && cell.value < 0) {
+          cell.revealed = true;
+        }
+      });
+    });
+
+    setGameBoard(newGameBoard);
   }
 
   // return cell if exists, null otherwise
