@@ -6,7 +6,7 @@
     CREATE TABLE IF NOT EXISTS mines.game(
       id SERIAL PRIMARY KEY,
       user_id INTEGER NOT NULL REFERENCES mines.user(id),
-      remaining_time INTEGER,
-      board JSONB,
-      status CHAR(1)
+      remaining_time INTEGER NOT NULL,
+      board JSONB NOT NULL,
+      status INTEGER NOT NULL
     )
