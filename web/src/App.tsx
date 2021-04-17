@@ -3,28 +3,25 @@ import logo from './logo.svg';
 import './App.css';
 import { BoardCell } from './components/BoardCell';
 import { board1, board2 } from './components/board-examples';
-
-interface Cell {
-  value: number,
-  revealed: boolean,
-}
-
-
+import { Cell } from './model/Cell';
+import { generateInitialGameBoard } from './utils/MineHelper';
+import { GameDifficulty } from './model/GameDifficulty';
 
 
 const App = () => {
-  const [gameBoard, setGameBoard] = useState<Cell[][]>(board2);
+  const [gameBoard, setGameBoard] = useState<Cell[][]>(generateInitialGameBoard(10,10, GameDifficulty.Medium));
 
   const handleCellClick = (row: number, column: number) => {
     const newGameBoard = revealAdjacents(row, column, gameBoard);
     setGameBoard(newGameBoard);
+    generateInitialGameBoard(4, 4, GameDifficulty.Easy);
   }
 
   const revealAdjacents = (row: number, column: number, gameBoard: Cell[][]) => {
     let newGameBoard = [...gameBoard];
     const currentCell = newGameBoard[row][column];
 
-    // if recursion returns to a visited cell just avoid evaluating it
+    // if recursion returns to a visited cell stop evaluating in that direction
     if(!currentCell.revealed) {
       const currentCellValue = currentCell.value;
 
@@ -38,7 +35,7 @@ const App = () => {
         if(currentCellValue > 0) {
           currentCell.revealed = true;
         } else if (currentCellValue == 0) {
-          // continue evaluating only if cell has no mines in it or adjacents to it  
+          // continue evaluating only if cell has no mines in or adjacents
           currentCell.revealed = true;
 
           let topLeft       = getCell(row-1, column-1)  // row-1|column-1
