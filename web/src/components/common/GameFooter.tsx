@@ -1,4 +1,6 @@
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
+import { HOME_PATH } from '../../config/paths';
 import { GameStatusContext } from './GameStatusContext';
 
 const GameFooter = () => {
@@ -8,6 +10,7 @@ const GameFooter = () => {
   } = useContext(GameStatusContext);
 
   let message = null;
+  let playAgainLink = null;
 
   if (isGameOver) {
     message = <div>'You lost'</div>;
@@ -17,8 +20,24 @@ const GameFooter = () => {
     message = <div>'You Won'</div>;
   }
 
+  if (isGameOver || hasPlayerWon) {
+    playAgainLink = (
+      <Link to={{
+        pathname: HOME_PATH,
+      }}
+      >
+        Play again
+      </Link>
+    );
+  }
+
   return (
-    <div>{message}</div>
+    <div className="game-footer-container">
+      <div>{message}</div>
+      <div>
+        {playAgainLink}
+      </div>
+    </div>
   );
 };
 
