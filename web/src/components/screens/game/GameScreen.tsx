@@ -1,38 +1,35 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BoardCell } from './BoardCell';
 import { Cell } from '../../../model/Cell';
-
 
 interface GameScreenProps {
   gameBoard: Cell[][],
   handleCellClick: Function,
 }
 
-const GameScreen = ({ gameBoard, handleCellClick }: GameScreenProps) => {
-   return (
-    <div>
-      <table>
-        <tbody>
-          {gameBoard.map((row, row_index) => {
-            return (
-            <tr>
-                {row.map((cell, y_index) => (
-                  <BoardCell
-                    revealed={cell.revealed}
-                    value={cell.value}
-                    row={row_index}
-                    column={y_index}
-                    handleCellClick={handleCellClick}
-                  />
-                  )
-                )}
-            </tr> 
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
-  );
-}
+const GameScreen = ({ gameBoard, handleCellClick }: GameScreenProps) => (
+  <div>
+    <table>
+      <tbody>
+        {gameBoard.map((row, rowIndex) => (
+          // eslint-disable-next-line react/no-array-index-key
+          <tr key={rowIndex}>
+            {row.map((cell, columnIndex) => (
+              <BoardCell
+                // eslint-disable-next-line react/no-array-index-key
+                key={`${rowIndex}-${columnIndex}`}
+                revealed={cell.revealed}
+                value={cell.value}
+                row={rowIndex}
+                column={columnIndex}
+                handleCellClick={handleCellClick}
+              />
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+);
 
 export { GameScreen };

@@ -1,0 +1,5 @@
+build/*
+public/*
+src/reportWebVitals.ts
+src/react-app-env.d.ts
+

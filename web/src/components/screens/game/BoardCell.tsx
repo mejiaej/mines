@@ -1,3 +1,5 @@
+import React from 'react';
+
 interface BoardCellProps {
   row: number,
   column: number,
@@ -6,33 +8,44 @@ interface BoardCellProps {
   handleCellClick: Function,
 }
 
-
-const BoardCell = ({ revealed, value, row, column, handleCellClick }: BoardCellProps) => {
+const BoardCell = ({
+  revealed,
+  value,
+  row,
+  column,
+  handleCellClick,
+}: BoardCellProps) => {
   let className = '';
   if (!revealed) {
     className = 'cell-hidden';
   }
 
   const handleClick = () => {
-    if(!revealed) {
+    if (!revealed) {
       handleCellClick(row, column);
+    }
+  };
+
+  let content = '';
+  if (revealed) {
+    if (value < 0) {
+      content = '*';
+    } else if (value > 0) {
+      content = value.toString();
     }
   }
 
-  let content = '';
-  //if(revealed) {
-    if (value < 0) {
-      content = '*'
-    } else if(value > 0) {
-      content = value.toString();
-    }
-  //}
-
   return (
-    <td className={className} onClick={handleClick}>
+    <td
+      onKeyDown={handleClick}
+      className={className}
+      onClick={handleClick}
+      // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
+      role="button"
+    >
       {content}
     </td>
-  )
-}
+  );
+};
 
 export { BoardCell };

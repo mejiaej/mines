@@ -24,94 +24,96 @@ const GameContainer = () => {
   const handleCellClick = (row: number, column: number) => {
     try {
       const newGameBoard = revealAdjacents(row, column, gameBoard);
-      setGameBoard(newGameBoard); 
+      setGameBoard(newGameBoard);
     } catch (error) {
       revealMines();
       alert(error.message);
-      //TODO: use react context to indicate that the game is over
+      // TODO: use react context to indicate that the game is over
     }
-  }
+  };
 
-  const revealAdjacents = (row: number, column: number, gameBoard: Cell[][]) => {
-    let newGameBoard = [...gameBoard];
+  const revealAdjacents = (
+    row: number,
+    column: number,
+    board: Cell[][],
+  ) => {
+    let newGameBoard = [...board];
     const currentCell = newGameBoard[row][column];
 
     // if recursion returns to a visited cell stop evaluating in that direction
-    if(!currentCell.revealed) {
+    if (!currentCell.revealed) {
       const currentCellValue = currentCell.value;
 
-      if(currentCellValue < 0) {
+      if (currentCellValue < 0) {
         // cell contains a mine
         newGameBoard[row][column].revealed = true;
         throw Error('Game Over');
         // TODO: reveal all the mines in the gameboard
-      } else {
+      } else if (currentCellValue > 0) {
         // if cell value > 0 = mine adjacent, stop evaluating in that direction
-        if(currentCellValue > 0) {
-          currentCell.revealed = true;
-        } else if (currentCellValue == 0) {
-          // continue evaluating only if cell has no mines in or adjacents
-          currentCell.revealed = true;
+        currentCell.revealed = true;
+      } else if (currentCellValue === 0) {
+        // continue evaluating only if cell has no mines in or adjacents
+        currentCell.revealed = true;
 
-          let topLeft       = getCell(row-1, column-1)  // row-1|column-1
-          let top           = getCell(row-1, column)    // row-1|column
-          let topRight      = getCell(row-1, column+1)  // (row-1|column+1)
-          let left          = getCell(row, column-1)    // (column-1)
-          let right         = getCell(row, column+1)    // (column+1)
-          let bottomLeft    = getCell(row+1, column-1)  // (row+1|column-1)
-          let bottom        = getCell(row+1, column)    // (row+1)
-          let bottomRight   = getCell(row+1, column+1)  // (row+1|column+1)
+        const topLeft = getCell(row - 1, column - 1); // row-1|column-1
+        const top = getCell(row - 1, column); // row-1|column
+        const topRight = getCell(row - 1, column + 1); // (row-1|column+1)
+        const left = getCell(row, column - 1); // (column-1)
+        const right = getCell(row, column + 1); // (column+1)
+        const bottomLeft = getCell(row + 1, column - 1); // (row+1|column-1)
+        const bottom = getCell(row + 1, column); // (row+1)
+        const bottomRight = getCell(row + 1, column + 1); // (row+1|column+1)
 
-          if (topLeft) {
-            newGameBoard = revealAdjacents(row-1, column-1, newGameBoard);
-          }
-          if (top) {
-            newGameBoard = revealAdjacents(row-1, column, newGameBoard);
-          }
-          if (topRight) {
-            newGameBoard = revealAdjacents(row-1, column+1, newGameBoard);
-          }
-          if (left) {
-            newGameBoard = revealAdjacents(row, column-1, newGameBoard);
-          }
-          if (right) {
-            newGameBoard = revealAdjacents(row, column+1, newGameBoard);
-          }
-          if (bottomLeft) {
-            newGameBoard = revealAdjacents(row+1, column-1, newGameBoard);
-          }
-          if (bottom) {
-            newGameBoard = revealAdjacents(row+1, column, newGameBoard);
-          }
-          if (bottomRight) {
-            newGameBoard = revealAdjacents(row+1, column+1, newGameBoard);
-          }
+        if (topLeft) {
+          newGameBoard = revealAdjacents(row - 1, column - 1, newGameBoard);
+        }
+        if (top) {
+          newGameBoard = revealAdjacents(row - 1, column, newGameBoard);
+        }
+        if (topRight) {
+          newGameBoard = revealAdjacents(row - 1, column + 1, newGameBoard);
+        }
+        if (left) {
+          newGameBoard = revealAdjacents(row, column - 1, newGameBoard);
+        }
+        if (right) {
+          newGameBoard = revealAdjacents(row, column + 1, newGameBoard);
+        }
+        if (bottomLeft) {
+          newGameBoard = revealAdjacents(row + 1, column - 1, newGameBoard);
+        }
+        if (bottom) {
+          newGameBoard = revealAdjacents(row + 1, column, newGameBoard);
+        }
+        if (bottomRight) {
+          newGameBoard = revealAdjacents(row + 1, column + 1, newGameBoard);
         }
       }
     }
-    
+
     return newGameBoard;
-  }
+  };
 
   const revealMines = () => {
     const newGameBoard = [...gameBoard];
     newGameBoard.forEach((row) => {
       row.forEach((cell) => {
-        if(!cell.revealed && cell.value < 0) {
+        if (!cell.revealed && cell.value < 0) {
           cell.revealed = true;
         }
       });
     });
 
     setGameBoard(newGameBoard);
-  }
+  };
 
   // return cell if exists, null otherwise
   const getCell = (row: number, column: number) => {
     const maxRowIndex = gameBoard.length - 1;
     const maxColumnIndex = gameBoard[0].length - 1;
 
-    if((row >= 0 && row <= maxRowIndex)
+    if ((row >= 0 && row <= maxRowIndex)
         && (column >= 0 && column <= maxColumnIndex)) {
       return gameBoard[row][column];
     }
