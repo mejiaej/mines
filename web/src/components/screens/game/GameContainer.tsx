@@ -12,9 +12,10 @@ const GameContainer = () => {
   const [gameBoard, setGameBoard] = useState<Cell[][]>([]);
   const [remaininTime, setRemaininTime] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [redFlag, setRedFlag] = useState(false);
-  const [questionMark, setQuestionMark] = useState(false);
-  const [minesNumber, setMinesNumber] = useState<number>(mines);
+  const [redFlagButtonOn, setRedFlagButtonOn] = useState(false);
+  const [questionMarkButtonOn, setQuestionMarkButtonOn] = useState(false);
+  const [redFlagNumber, setredFlagNumber] = useState<number>(mines);
+  const [revealedCells, setRevealedCells] = useState<number>(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,8 +34,10 @@ const GameContainer = () => {
   }, []);
 
   const handleCellClick = (row: number, column: number) => {
-    if (redFlag || questionMark) {
+    // if any action button active, flag cell
+    if (redFlagButtonOn || questionMarkButtonOn) {
       flagCell(row, column);
+    // If click on a cell without
     } else {
       try {
         const newGameBoard = revealAdjacents(row, column, gameBoard);
@@ -42,7 +45,6 @@ const GameContainer = () => {
       } catch (error) {
         revealMines();
         alert(error.message);
-        // TODO: use react context to indicate that the game is over
       }
     }
   };
@@ -55,21 +57,24 @@ const GameContainer = () => {
     let newGameBoard = [...board];
     const currentCell = newGameBoard[row][column];
 
-    // if recursion returns to a visited cell stop evaluating in that direction
-    if (!currentCell.revealed) {
+    // if cell revealed || redFlag || questionMark  stop recursion in that direction
+    if (!currentCell.revealed
+        && !currentCell.redFlag
+        && !currentCell.questionMark) {
       const currentCellValue = currentCell.value;
 
       if (currentCellValue < 0) {
         // cell contains a mine
-        newGameBoard[row][column].revealed = true;
+        currentCell.revealed = true;
         throw Error('Game Over');
-        // TODO: reveal all the mines in the gameboard
       } else if (currentCellValue > 0) {
         // if cell value > 0 = mine adjacent, stop evaluating in that direction
         currentCell.revealed = true;
+        setRevealedCells((prevRevealedCells) => prevRevealedCells + 1);
       } else if (currentCellValue === 0) {
         // continue evaluating only if cell has no mines in or adjacents
         currentCell.revealed = true;
+        setRevealedCells((prevRevealedCells) => prevRevealedCells + 1);
 
         const topLeft = getCell(row - 1, column - 1); // row-1|column-1
         const top = getCell(row - 1, column); // row-1|column
@@ -137,42 +142,48 @@ const GameContainer = () => {
   };
 
   const handleRedFlagClick = () => {
-    if (questionMark) {
-      setQuestionMark(false);
+    if (questionMarkButtonOn) {
+      setQuestionMarkButtonOn(false);
     }
-    setRedFlag((prevState) => !prevState);
+    setRedFlagButtonOn((prevState) => !prevState);
   };
 
   const handleQuestionMarkClick = () => {
-    if (redFlag) {
-      setRedFlag(false);
+    if (redFlagButtonOn) {
+      setRedFlagButtonOn(false);
     }
-    setQuestionMark((prevState) => !prevState);
+    setQuestionMarkButtonOn((prevState) => !prevState);
   };
 
   const flagCell = (row: number, column: number) => {
     const newGameBoard = [...gameBoard];
     const currentCell = newGameBoard[row][column];
     if (!currentCell.revealed) {
-      if (redFlag) {
+      if (redFlagButtonOn) {
         currentCell.questionMark = false;
         if (currentCell.redFlag) {
           currentCell.redFlag = false;
-          setMinesNumber((prevMinesNumber) => prevMinesNumber + 1);
-        } else if (minesNumber > 0) {
+          setredFlagNumber((prevFlagNumber) => prevFlagNumber + 1);
+        } else if (redFlagNumber > 0) {
           currentCell.redFlag = true;
-          setMinesNumber((prevMinesNumber) => prevMinesNumber - 1);
+          setredFlagNumber((prevFlagNumber) => prevFlagNumber - 1);
         }
-      } else if (questionMark) {
+      } else if (questionMarkButtonOn) {
         if (currentCell.redFlag) {
           currentCell.redFlag = false;
-          setMinesNumber((prevMinesNumber) => prevMinesNumber + 1);
+          setredFlagNumber((prevFlagNumber) => prevFlagNumber + 1);
         }
         currentCell.questionMark = !currentCell.questionMark;
       }
     }
     setGameBoard(newGameBoard);
   };
+
+  let winMessage;
+  const cellsWithoutMines = (rows * columns) - mines;
+  if (revealedCells === cellsWithoutMines && redFlagNumber === 0) {
+    winMessage = <div>'You won'</div>;
+  }
 
   if (loading) {
     return (
@@ -181,18 +192,20 @@ const GameContainer = () => {
       </div>
     );
   }
-
   return (
-    <GameScreen
-      gameBoard={gameBoard}
-      handleCellClick={handleCellClick}
-      remainingTime={remaininTime}
-      redFlag={redFlag}
-      questionMark={questionMark}
-      handleRedFlagClick={handleRedFlagClick}
-      handleQuestionMarkClick={handleQuestionMarkClick}
-      mines={minesNumber}
-    />
+    <>
+      <GameScreen
+        gameBoard={gameBoard}
+        handleCellClick={handleCellClick}
+        remainingTime={remaininTime}
+        redFlag={redFlagButtonOn}
+        questionMark={questionMarkButtonOn}
+        handleRedFlagClick={handleRedFlagClick}
+        handleQuestionMarkClick={handleQuestionMarkClick}
+        mines={redFlagNumber}
+      />
+      {winMessage}
+    </>
   );
 };
 

@@ -29,27 +29,26 @@ const BoardCell = ({
   };
 
   let content;
-  if (revealed) {
-    if (value < 0) {
-      content = '*';
-    } else if (value > 0) {
-      content = value.toString();
-    }
-  } else {
-    if (redFlag) {
-      content = <span>&#128681;</span>;
-    }
-    if (questionMark) {
-      content = '?';
-    }
+  // if (revealed) {
+  if (value < 0) {
+    content = '*';
+  } else if (value > 0) {
+    content = value.toString();
   }
+  // } else {
+  if (redFlag) {
+    content = <span>&#128681;</span>;
+  }
+  if (questionMark) {
+    content = '?';
+  }
+  // }
 
   return (
     <td
       onKeyDown={handleClick}
       className={className}
       onClick={handleClick}
-      onContextMenu={() => console.log('click')}
       // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
       role="button"
     >

@@ -29,6 +29,8 @@ public class Game {
   @JoinColumn(name = "userId", referencedColumnName = "id", insertable = false, updatable = false)
   private User user;
 
+  private Long userId;
+
   private int remainingTime;
   @Enumerated(EnumType.ORDINAL)
   private GameStatus status;
@@ -75,5 +77,13 @@ public class Game {
 
   public void setBoard(List<List<GameCell>> board) {
     this.board = board;
+  }
+
+  public Long getUserId() {
+    return userId;
+  }
+
+  public void setUserId(Long userId) {
+    this.userId = userId;
   }
 }

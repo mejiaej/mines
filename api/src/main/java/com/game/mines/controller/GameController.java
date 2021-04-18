@@ -30,4 +30,9 @@ public class GameController {
   public Game generateNewGame(@RequestBody NewGameDto newGameDto) {
     return gameService.generateNewGameBoard(newGameDto);
   }
+
+  @PostMapping("/game")
+  public Game generateNewGame(@RequestBody Game game) {
+    return gameRepository.save(game);
+  }
 }
