@@ -10,16 +10,20 @@ const GameContainer = () => {
   // @ts-ignore
   const { rows, columns, mines } = location.state;
   const [gameBoard, setGameBoard] = useState<Cell[][]>([]);
+  const [remaininTime, setRemaininTime] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data: { board } } = await axios.post(POST_NEW_GAME_BOARD,
+      const { data } = await axios.post(POST_NEW_GAME_BOARD,
         {
           rows,
           columns,
           mines,
         });
-      setGameBoard(board);
+      setGameBoard(data.board);
+      setRemaininTime(data.remainingTime);
+      setLoading(false);
     };
 
     fetchData();
@@ -125,10 +129,19 @@ const GameContainer = () => {
     return null;
   };
 
+  if (loading) {
+    return (
+      <div>
+        ...Loading
+      </div>
+    );
+  }
+
   return (
     <GameScreen
       gameBoard={gameBoard}
       handleCellClick={handleCellClick}
+      remainingTime={remaininTime}
     />
   );
 };

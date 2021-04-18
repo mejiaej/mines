@@ -6,11 +6,16 @@ import { GameHeader } from './GameHeader';
 interface GameScreenProps {
   gameBoard: Cell[][],
   handleCellClick: Function,
+  remainingTime: number,
 }
 
-const GameScreen = ({ gameBoard, handleCellClick }: GameScreenProps) => (
+const GameScreen = ({
+  gameBoard,
+  handleCellClick,
+  remainingTime,
+}: GameScreenProps) => (
   <div>
-    <GameHeader />
+    <GameHeader remainingTime={remainingTime} />
     <div>
       <table>
         <tbody>

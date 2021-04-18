@@ -47,3 +47,26 @@
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
+
+
+.game-header-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex {
+  display: flex;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-evenly {
+  justify-content: space-evenly;
+}
+
+.margin-between-rows {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
