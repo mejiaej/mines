@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { CountDown } from './CountDown';
+import { GameStatusContext } from './GameStatusContext';
 
 interface GameHeaderProps {
   remainingTime: number,
@@ -18,6 +19,9 @@ const GameHeader = ({
   handleRedFlagClick,
   mines,
 }: GameHeaderProps) => {
+  const { isGameOver, hasPlayerWon } = useContext(GameStatusContext);
+  const isGameActive = () => !(isGameOver || hasPlayerWon);
+
   let redFlagClass = '';
   let questionMarkClass = '';
 
@@ -29,6 +33,23 @@ const GameHeader = ({
     questionMarkClass = 'selected-button';
   }
 
+  if (!isGameActive()) {
+    redFlagClass = '';
+    questionMarkClass = '';
+  }
+
+  const OnRedFlagClick = () => {
+    if (isGameActive()) {
+      handleRedFlagClick();
+    }
+  };
+
+  const OnQuestionMarkClick = () => {
+    if (isGameActive()) {
+      handleQuestionMarkClick();
+    }
+  };
+
   return (
     <div className="game-header-container">
       <div className="flex justify-center margin-between-rows">
@@ -36,12 +57,12 @@ const GameHeader = ({
       </div>
       <div className="flex justify-evenly margin-between-rows">
         {/* @ts-ignore */}
-        <button className={redFlagClass} type="button" onClick={handleRedFlagClick}>
+        <button className={redFlagClass} type="button" onClick={OnRedFlagClick}>
           <span>&#128681;</span>
           {mines}
         </button>
         {/* @ts-ignore */}
-        <button className={questionMarkClass} type="button" onClick={handleQuestionMarkClick}>
+        <button className={questionMarkClass} type="button" onClick={OnQuestionMarkClick}>
           ?
         </button>
       </div>

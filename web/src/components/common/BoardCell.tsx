@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { GameStatusContext } from './GameStatusContext';
 
 interface BoardCellProps {
   row: number,
@@ -19,13 +20,18 @@ const BoardCell = ({
   redFlag,
   questionMark,
 }: BoardCellProps) => {
+  const { isGameOver, hasPlayerWon } = useContext(GameStatusContext);
+  const isGameActive = () => !(isGameOver || hasPlayerWon);
+
   let className = '';
   if (!revealed) {
     className = 'cell-hidden';
   }
 
   const handleClick = () => {
-    handleCellClick(row, column);
+    if (isGameActive()) {
+      handleCellClick(row, column);
+    }
   };
 
   let content;

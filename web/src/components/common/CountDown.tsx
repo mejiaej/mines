@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { GameStatusContext } from './GameStatusContext';
 
 interface CountDownProps {
   remaininTime: number,
@@ -6,12 +7,21 @@ interface CountDownProps {
 
 const CountDown = ({ remaininTime }: CountDownProps) => {
   const [seconds, setSeconds] = useState(remaininTime);
+  const {
+    isGameOver,
+    hasPlayerWon,
+    setGameOver,
+  } = useContext(GameStatusContext);
+  const isGameActive = () => !(isGameOver || hasPlayerWon);
 
   useEffect(() => {
-    if (seconds > 0) {
-      setTimeout(() => setSeconds(seconds - 1), 1000);
-    } else {
-      console.log('BOOOOM!');
+    // countdown should only work when game is active
+    if (isGameActive()) {
+      if (seconds > 0) {
+        setTimeout(() => setSeconds(seconds - 1), 1000);
+      } else {
+        setGameOver(true);
+      }
     }
   });
 

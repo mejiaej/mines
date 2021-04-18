@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Cell } from '../../model/Cell';
+import { GameStatusContext } from './GameStatusContext';
 import { GameScreen } from './GameScreen';
+import { GameFooter } from './GameFooter';
 
 interface GameContainerProps {
   rows: number,
@@ -22,6 +24,8 @@ const GameContainer = ({
   const [questionMarkButtonOn, setQuestionMarkButtonOn] = useState(false);
   const [redFlagNumber, setredFlagNumber] = useState<number>(mines);
   const [revealedCells, setRevealedCells] = useState<number>(0);
+  const [isGameOver, setGameOver] = useState(false);
+  const [hasPlayerWon, setPlayerWon] = useState(false);
 
   const handleCellClick = (row: number, column: number) => {
     // if any action button active, flag cell
@@ -34,7 +38,7 @@ const GameContainer = ({
         setGameBoard(newGameBoard);
       } catch (error) {
         revealMines();
-        alert(error.message);
+        setGameOver(true);
       }
     }
   };
@@ -169,14 +173,23 @@ const GameContainer = ({
     setGameBoard(newGameBoard);
   };
 
-  let winMessage;
   const cellsWithoutMines = (rows * columns) - mines;
   if (revealedCells === cellsWithoutMines && redFlagNumber === 0) {
-    winMessage = <div>'You won'</div>;
+    // validation to avoid infinite loop render
+    if (!hasPlayerWon) {
+      setPlayerWon(true);
+    }
   }
 
   return (
-    <>
+    <GameStatusContext.Provider
+      value={{
+        isGameOver,
+        setGameOver,
+        hasPlayerWon,
+        setPlayerWon,
+      }}
+    >
       <GameScreen
         gameBoard={gameBoard}
         handleCellClick={handleCellClick}
@@ -187,8 +200,8 @@ const GameContainer = ({
         handleQuestionMarkClick={handleQuestionMarkClick}
         mines={redFlagNumber}
       />
-      {winMessage}
-    </>
+      <GameFooter />
+    </GameStatusContext.Provider>
   );
 };
 
