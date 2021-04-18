@@ -3,6 +3,12 @@ import { Link } from 'react-router-dom';
 import { HOME_PATH } from '../../config/paths';
 import { GameStatusContext } from './GameStatusContext';
 
+const PlayAgainButton = () => (
+  <Link to={HOME_PATH}>
+    Play again
+  </Link>
+);
+
 const GameFooter = () => {
   const {
     isGameOver,
@@ -13,32 +19,23 @@ const GameFooter = () => {
   let playAgainLink = null;
 
   if (isGameOver) {
-    message = <div>'You lost'</div>;
+    message = <div>You lost</div>;
   }
 
   if (hasPlayerWon) {
-    message = <div>'You Won'</div>;
+    message = <div>You Won</div>;
   }
 
   if (isGameOver || hasPlayerWon) {
-    playAgainLink = (
-      <Link to={{
-        pathname: HOME_PATH,
-      }}
-      >
-        Play again
-      </Link>
-    );
+    playAgainLink = <PlayAgainButton />;
   }
 
   return (
     <div className="game-footer-container">
-      <div>{message}</div>
-      <div>
-        {playAgainLink}
-      </div>
+      {message}
+      {playAgainLink}
     </div>
   );
 };
 
-export { GameFooter };
+export { GameFooter, PlayAgainButton };

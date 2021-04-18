@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { GameStatusContext } from './GameStatusContext';
 
-interface BoardCellProps {
+export interface BoardCellProps {
   row: number,
   column: number,
   value: number,

@@ -17,32 +17,30 @@ const GameSettings = () => {
   });
 
   return (
-    <div>
-      <form className="game-seetings-form" onSubmit={formik.handleSubmit}>
-        <input
-          id="rows"
-          name="rows"
-          type="number"
-          placeholder="rows"
-          onChange={formik.handleChange}
-        />
-        <input
-          id="columns"
-          name="columns"
-          type="number"
-          placeholder="columns"
-          onChange={formik.handleChange}
-        />
-        <input
-          id="mines"
-          name="mines"
-          type="number"
-          placeholder="mines"
-          onChange={formik.handleChange}
-        />
-        <button type="submit">START</button>
-      </form>
-    </div>
+    <form className="game-seetings-form" onSubmit={formik.handleSubmit}>
+      <input
+        id="rows"
+        name="rows"
+        type="number"
+        placeholder="rows"
+        onChange={formik.handleChange}
+      />
+      <input
+        id="columns"
+        name="columns"
+        type="number"
+        placeholder="columns"
+        onChange={formik.handleChange}
+      />
+      <input
+        id="mines"
+        name="mines"
+        type="number"
+        placeholder="mines"
+        onChange={formik.handleChange}
+      />
+      <button type="submit">START</button>
+    </form>
   );
 };
 

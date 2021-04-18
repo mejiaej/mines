@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { CountDown } from './CountDown';
 import { GameStatusContext } from './GameStatusContext';
 
-interface GameHeaderProps {
+export interface GameHeaderProps {
   remainingTime: number,
   redFlag: boolean,
   questionMark: boolean,
@@ -69,4 +69,5 @@ const GameHeader = ({
     </div>
   );
 };
+
 export { GameHeader };

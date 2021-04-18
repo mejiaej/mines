@@ -22,7 +22,7 @@ const GameContainer = ({
   const [gameBoard, setGameBoard] = useState<Cell[][]>(initialGameBoard);
   const [redFlagButtonOn, setRedFlagButtonOn] = useState(false);
   const [questionMarkButtonOn, setQuestionMarkButtonOn] = useState(false);
-  const [redFlagNumber, setredFlagNumber] = useState<number>(mines);
+  const [redFlagNumber, setRedFlagNumber] = useState<number>(mines);
   const [revealedCells, setRevealedCells] = useState<number>(0);
   const [isGameOver, setGameOver] = useState(false);
   const [hasPlayerWon, setPlayerWon] = useState(false);
@@ -157,15 +157,15 @@ const GameContainer = ({
         currentCell.questionMark = false;
         if (currentCell.redFlag) {
           currentCell.redFlag = false;
-          setredFlagNumber((prevFlagNumber) => prevFlagNumber + 1);
+          setRedFlagNumber((prevFlagNumber) => prevFlagNumber + 1);
         } else if (redFlagNumber > 0) {
           currentCell.redFlag = true;
-          setredFlagNumber((prevFlagNumber) => prevFlagNumber - 1);
+          setRedFlagNumber((prevFlagNumber) => prevFlagNumber - 1);
         }
       } else if (questionMarkButtonOn) {
         if (currentCell.redFlag) {
           currentCell.redFlag = false;
-          setredFlagNumber((prevFlagNumber) => prevFlagNumber + 1);
+          setRedFlagNumber((prevFlagNumber) => prevFlagNumber + 1);
         }
         currentCell.questionMark = !currentCell.questionMark;
       }
