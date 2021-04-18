@@ -1,6 +1,6 @@
 import React from 'react';
+import { Cell } from '../../model/Cell';
 import { BoardCell } from './BoardCell';
-import { Cell } from '../../../model/Cell';
 import { GameHeader } from './GameHeader';
 
 interface GameScreenProps {

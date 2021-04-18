@@ -1,37 +1,27 @@
-import axios from 'axios';
-import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import { POST_NEW_GAME_BOARD } from '../../../config/end-points';
-import { Cell } from '../../../model/Cell';
+import React, { useState } from 'react';
+import { Cell } from '../../model/Cell';
 import { GameScreen } from './GameScreen';
 
-const GameContainer = () => {
-  const location = useLocation();
-  // @ts-ignore
-  const { rows, columns, mines } = location.state;
-  const [gameBoard, setGameBoard] = useState<Cell[][]>([]);
-  const [remaininTime, setRemaininTime] = useState(0);
-  const [loading, setLoading] = useState(true);
+interface GameContainerProps {
+  rows: number,
+  columns: number,
+  mines: number,
+  remaininTime: number,
+  initialGameBoard: Cell[][],
+}
+
+const GameContainer = ({
+  rows,
+  columns,
+  mines,
+  remaininTime,
+  initialGameBoard,
+}: GameContainerProps) => {
+  const [gameBoard, setGameBoard] = useState<Cell[][]>(initialGameBoard);
   const [redFlagButtonOn, setRedFlagButtonOn] = useState(false);
   const [questionMarkButtonOn, setQuestionMarkButtonOn] = useState(false);
   const [redFlagNumber, setredFlagNumber] = useState<number>(mines);
   const [revealedCells, setRevealedCells] = useState<number>(0);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const { data } = await axios.post(POST_NEW_GAME_BOARD,
-        {
-          rows,
-          columns,
-          mines,
-        });
-      setGameBoard(data.board);
-      setRemaininTime(data.remainingTime);
-      setLoading(false);
-    };
-
-    fetchData();
-  }, []);
 
   const handleCellClick = (row: number, column: number) => {
     // if any action button active, flag cell
@@ -185,13 +175,6 @@ const GameContainer = () => {
     winMessage = <div>'You won'</div>;
   }
 
-  if (loading) {
-    return (
-      <div>
-        ...Loading
-      </div>
-    );
-  }
   return (
     <>
       <GameScreen
