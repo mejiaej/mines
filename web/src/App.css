@@ -54,23 +54,51 @@
   flex-direction: column;
 }
 
-.flex {
-  display: flex;
-}
-
-.justify-center {
-  justify-content: center;
-}
-
 .justify-evenly {
   justify-content: space-evenly;
 }
 
-.margin-between-rows {
+.selected-button {
+  background-color: gray;
+}
+
+.game-board-container{
+  display: flex;
+  justify-content: center;
+}
+
+.game-footer-container{
+  margin-top: 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header-countdown{
+  display: flex;
+  justify-content: center;
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
 
-.selected-button {
-  background-color: gray;
+.header-actions {
+  display: flex;
+  justify-content: center;
+}
+
+.header-actions-button {
+  margin: 0 5rem;
+}
+
+@media screen and (min-width: 1400px) {
+  .game-seetings-form input {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .game-seetings-form {
+    display: flex;
+    flex-direction: column;
+    padding: 10rem 35rem;
+  }
 }

@@ -52,17 +52,17 @@ const GameHeader = ({
 
   return (
     <div className="game-header-container">
-      <div className="flex justify-center margin-between-rows">
+      <div className="header-countdown">
         <CountDown remaininTime={remainingTime} />
       </div>
-      <div className="flex justify-evenly margin-between-rows">
+      <div className="header-actions">
         {/* @ts-ignore */}
-        <button className={redFlagClass} type="button" onClick={OnRedFlagClick}>
+        <button className={`header-actions-button ${redFlagClass}`} type="button" onClick={OnRedFlagClick}>
           <span>&#128681;</span>
           {mines}
         </button>
         {/* @ts-ignore */}
-        <button className={questionMarkClass} type="button" onClick={OnQuestionMarkClick}>
+        <button className={`header-actions-button ${questionMarkClass}`} type="button" onClick={OnQuestionMarkClick}>
           ?
         </button>
       </div>

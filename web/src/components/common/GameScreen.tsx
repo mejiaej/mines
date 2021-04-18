@@ -33,7 +33,7 @@ const GameScreen = ({
       handleQuestionMarkClick={handleQuestionMarkClick}
       mines={mines}
     />
-    <div>
+    <div className="game-board-container">
       <table>
         <tbody>
           {gameBoard.map((row, rowIndex) => (
