@@ -19,8 +19,14 @@ dependencies {
 	implementation 'org.postgresql:postgresql'
 	implementation 'com.vladmihalcea:hibernate-types-52:2.3.4'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation ('org.junit.vintage:junit-vintage-engine') {
+		exclude group: 'org.hamcrest', module: 'commons-collections'
+	}
 }
 
 test {
 	useJUnitPlatform()
+	afterTest { desc, result ->
+		logger.quiet "Executing test ${desc.name} [${desc.className}] with result: ${result.resultType}"
+	}
 }
