@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
-import { GameContainer } from './components/screens/game/GameContainer';
+import { Main } from './components/Main';
 
 const App = () => (
-  <GameContainer />
+  <Main />
 );
 
 export default App;

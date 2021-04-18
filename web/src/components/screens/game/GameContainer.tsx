@@ -1,19 +1,23 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { POST_NEW_GAME_BOARD } from '../../../config/end-points';
 import { Cell } from '../../../model/Cell';
 import { GameScreen } from './GameScreen';
 
 const GameContainer = () => {
+  const location = useLocation();
+  // @ts-ignore
+  const { rows, columns, mines } = location.state;
   const [gameBoard, setGameBoard] = useState<Cell[][]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       const { data: { board } } = await axios.post(POST_NEW_GAME_BOARD,
         {
-          rows: 10,
-          columns: 10,
-          mines: 10,
+          rows,
+          columns,
+          mines,
         });
       setGameBoard(board);
     };

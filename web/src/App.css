@@ -36,3 +36,14 @@
     transform: rotate(360deg);
   }
 }
+
+.game-seetings-form {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 3rem;
+}
+
+.game-seetings-form input {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
