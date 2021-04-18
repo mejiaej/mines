@@ -12,6 +12,9 @@ const GameContainer = () => {
   const [gameBoard, setGameBoard] = useState<Cell[][]>([]);
   const [remaininTime, setRemaininTime] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [redFlag, setRedFlag] = useState(false);
+  const [questionMark, setQuestionMark] = useState(false);
+  const [minesNumber, setMinesNumber] = useState<number>(mines);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,13 +33,17 @@ const GameContainer = () => {
   }, []);
 
   const handleCellClick = (row: number, column: number) => {
-    try {
-      const newGameBoard = revealAdjacents(row, column, gameBoard);
-      setGameBoard(newGameBoard);
-    } catch (error) {
-      revealMines();
-      alert(error.message);
-      // TODO: use react context to indicate that the game is over
+    if (redFlag || questionMark) {
+      flagCell(row, column);
+    } else {
+      try {
+        const newGameBoard = revealAdjacents(row, column, gameBoard);
+        setGameBoard(newGameBoard);
+      } catch (error) {
+        revealMines();
+        alert(error.message);
+        // TODO: use react context to indicate that the game is over
+      }
     }
   };
 
@@ -129,6 +136,44 @@ const GameContainer = () => {
     return null;
   };
 
+  const handleRedFlagClick = () => {
+    if (questionMark) {
+      setQuestionMark(false);
+    }
+    setRedFlag((prevState) => !prevState);
+  };
+
+  const handleQuestionMarkClick = () => {
+    if (redFlag) {
+      setRedFlag(false);
+    }
+    setQuestionMark((prevState) => !prevState);
+  };
+
+  const flagCell = (row: number, column: number) => {
+    const newGameBoard = [...gameBoard];
+    const currentCell = newGameBoard[row][column];
+    if (!currentCell.revealed) {
+      if (redFlag) {
+        currentCell.questionMark = false;
+        if (currentCell.redFlag) {
+          currentCell.redFlag = false;
+          setMinesNumber((prevMinesNumber) => prevMinesNumber + 1);
+        } else if (minesNumber > 0) {
+          currentCell.redFlag = true;
+          setMinesNumber((prevMinesNumber) => prevMinesNumber - 1);
+        }
+      } else if (questionMark) {
+        if (currentCell.redFlag) {
+          currentCell.redFlag = false;
+          setMinesNumber((prevMinesNumber) => prevMinesNumber + 1);
+        }
+        currentCell.questionMark = !currentCell.questionMark;
+      }
+    }
+    setGameBoard(newGameBoard);
+  };
+
   if (loading) {
     return (
       <div>
@@ -142,6 +187,11 @@ const GameContainer = () => {
       gameBoard={gameBoard}
       handleCellClick={handleCellClick}
       remainingTime={remaininTime}
+      redFlag={redFlag}
+      questionMark={questionMark}
+      handleRedFlagClick={handleRedFlagClick}
+      handleQuestionMarkClick={handleQuestionMarkClick}
+      mines={minesNumber}
     />
   );
 };

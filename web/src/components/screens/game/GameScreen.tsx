@@ -7,15 +7,32 @@ interface GameScreenProps {
   gameBoard: Cell[][],
   handleCellClick: Function,
   remainingTime: number,
+  redFlag: boolean,
+  questionMark: boolean,
+  handleQuestionMarkClick: Function,
+  handleRedFlagClick: Function,
+  mines: number,
 }
 
 const GameScreen = ({
   gameBoard,
   handleCellClick,
   remainingTime,
+  redFlag,
+  handleRedFlagClick,
+  questionMark,
+  handleQuestionMarkClick,
+  mines,
 }: GameScreenProps) => (
   <div>
-    <GameHeader remainingTime={remainingTime} />
+    <GameHeader
+      remainingTime={remainingTime}
+      redFlag={redFlag}
+      questionMark={questionMark}
+      handleRedFlagClick={handleRedFlagClick}
+      handleQuestionMarkClick={handleQuestionMarkClick}
+      mines={mines}
+    />
     <div>
       <table>
         <tbody>
@@ -31,6 +48,8 @@ const GameScreen = ({
                   row={rowIndex}
                   column={columnIndex}
                   handleCellClick={handleCellClick}
+                  redFlag={cell.redFlag}
+                  questionMark={cell.questionMark}
                 />
               ))}
             </tr>

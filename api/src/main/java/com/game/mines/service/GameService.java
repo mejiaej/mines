@@ -1,5 +1,6 @@
 package com.game.mines.service;
 
+import com.game.mines.config.Constants;
 import com.game.mines.dto.NewGameDto;
 import com.game.mines.entity.Game;
 import com.game.mines.entity.GameCell;
@@ -59,6 +60,7 @@ public class GameService {
     }
 
     Game newGame = new Game();
+    newGame.setRemainingTime(Constants.DEFAULT_GAME_TIME);
     newGame.setBoard(gameBoard);
     return newGame;
   }
