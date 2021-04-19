@@ -25,8 +25,9 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test": "cross-env CI=true react-scripts test",
+    "eject": "react-scripts eject",
+    "cy:run": "cypress run"
   },
   "browserslist": {
     "production": [
@@ -45,6 +46,7 @@
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
     "@wojtekmaj/enzyme-adapter-react-17": "0.6.1",
+    "cross-env": "7.0.3",
     "cypress": "7.1.0",
     "enzyme": "3.11.0",
     "eslint": "^7.24.0",
