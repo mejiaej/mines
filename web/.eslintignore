@@ -3,4 +3,6 @@ public/*
 src/reportWebVitals.ts
 src/react-app-env.d.ts
 src/setupTests.ts
-
+cypress/integration
+cypress/plugins
+cypress/support

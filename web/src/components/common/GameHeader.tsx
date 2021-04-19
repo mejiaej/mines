@@ -57,7 +57,7 @@ const GameHeader = ({
       </div>
       <div className="header-actions">
         {/* @ts-ignore */}
-        <button className={`header-actions-button ${redFlagClass}`} type="button" onClick={OnRedFlagClick}>
+        <button data-cy="button-red-flag" className={`header-actions-button ${redFlagClass}`} type="button" onClick={OnRedFlagClick}>
           <span>&#128681;</span>
           {mines}
         </button>

@@ -19,6 +19,7 @@ const GameSettings = () => {
   return (
     <form className="game-seetings-form" onSubmit={formik.handleSubmit}>
       <input
+        data-cy="rows"
         id="rows"
         name="rows"
         type="number"
@@ -26,6 +27,7 @@ const GameSettings = () => {
         onChange={formik.handleChange}
       />
       <input
+        data-cy="columns"
         id="columns"
         name="columns"
         type="number"
@@ -33,13 +35,14 @@ const GameSettings = () => {
         onChange={formik.handleChange}
       />
       <input
+        data-cy="mines"
         id="mines"
         name="mines"
         type="number"
         placeholder="mines"
         onChange={formik.handleChange}
       />
-      <button type="submit">START</button>
+      <button data-cy="start" type="submit">START</button>
     </form>
   );
 };

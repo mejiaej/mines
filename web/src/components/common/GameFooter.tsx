@@ -4,7 +4,7 @@ import { HOME_PATH } from '../../config/paths';
 import { GameStatusContext } from './GameStatusContext';
 
 const PlayAgainButton = () => (
-  <Link to={HOME_PATH}>
+  <Link data-cy="a-play-again" to={HOME_PATH}>
     Play again
   </Link>
 );
@@ -19,11 +19,11 @@ const GameFooter = () => {
   let playAgainLink = null;
 
   if (isGameOver) {
-    message = <div>You lost</div>;
+    message = <div data-cy="game-lost">You lost</div>;
   }
 
   if (hasPlayerWon) {
-    message = <div>You Won</div>;
+    message = <div data-cy="game-won">You Won</div>;
   }
 
   if (isGameOver || hasPlayerWon) {

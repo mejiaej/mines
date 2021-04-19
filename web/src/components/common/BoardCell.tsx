@@ -50,8 +50,15 @@ const BoardCell = ({
   }
   // }
 
+  // value needed for e2e testing
+  let dataCy;
+  if (process.env.NODE_ENV === 'development') {
+    dataCy = `cell-${value < 0 ? 'mine' : 'not-a-mine'}`;
+  }
+
   return (
     <td
+      data-cy={dataCy}
       onKeyDown={handleClick}
       className={className}
       onClick={handleClick}
