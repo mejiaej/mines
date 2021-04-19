@@ -9,6 +9,7 @@
 2. Start the API
 ```batch
 # cd /api
+
 $ docker-compose up -d
 $ gradlew bootRun
 ```
@@ -20,6 +21,7 @@ $ gradlew bootRun
 
 ```batch
 # cd /web
+
 $ yarn install
 $ yarn start
 ```
@@ -34,6 +36,7 @@ We can run react tests without having the API and Front-end running.
 Go to `/web` directory
 ```batch
 # cd /web
+
 $ yarn test
 ```
 
@@ -41,10 +44,12 @@ $ yarn test
 Database, API and Front-end need to be running, make sure you've followed the steps presented above.
 ```batch
 # cd /api
+
 $ docker-compose up -d
 $ gradlew bootRun
 
 # cd /web
+
 $ yarn cy:run
 ```
 
@@ -54,6 +59,7 @@ We only need the database running.
 Go to `/api`
 ```batch
 # cd /api
+
 $ docker-compose up -d
 $ gradle test
 ```
