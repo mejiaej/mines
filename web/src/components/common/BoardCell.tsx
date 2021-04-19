@@ -35,20 +35,20 @@ const BoardCell = ({
   };
 
   let content;
-  // if (revealed) {
-  if (value < 0) {
-    content = '*';
-  } else if (value > 0) {
-    content = value.toString();
+  if (revealed) {
+    if (value < 0) {
+      content = '*';
+    } else if (value > 0) {
+      content = value.toString();
+    }
+  } else {
+    if (redFlag) {
+      content = <span>&#128681;</span>;
+    }
+    if (questionMark) {
+      content = '?';
+    }
   }
-  // } else {
-  if (redFlag) {
-    content = <span>&#128681;</span>;
-  }
-  if (questionMark) {
-    content = '?';
-  }
-  // }
 
   // value needed for e2e testing
   let dataCy;
