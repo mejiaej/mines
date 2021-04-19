@@ -12,6 +12,7 @@
 $ docker-compose up -d
 $ ./gradlew bootRun
 ```
+##### If you run into `zsh: permission denied` you need to run `chmod 755 gradlew`
 
 #### Run Front-end
 1. API needs to be running.
