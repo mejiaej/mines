@@ -1,5 +1,3 @@
-**Remember** If using git bash replace `gradlew` with `./gradlew`.
-
 ## Development setup
 
 #### Run API
@@ -9,7 +7,7 @@
 # cd /api
 
 $ docker-compose up -d
-$ gradlew bootRun
+$ ./gradlew bootRun
 ```
 
 #### Run Front-end
@@ -44,7 +42,7 @@ Database, API and Front-end need to be running, make sure you've followed the st
 # cd /api
 
 $ docker-compose up -d
-$ gradlew bootRun
+$ ./gradlew bootRun
 
 # cd /web
 
